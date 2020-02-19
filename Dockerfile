@@ -15,6 +15,7 @@ ENV BUILD_ID=idonthaveabuildidbutgradleishappynow
 COPY --from=beam-java8-build /root/beam beam
 RUN cd beam && \
     ./gradlew \
+        --console=plain \
         -x shadowJar \
         -x shadowTestJar \
         -x compileJava \
