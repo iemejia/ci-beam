@@ -6,17 +6,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # strategy:
-    #   matrix:
-    #     BEAM_REPO:
-    #       - https://github.com/iemejia/beam
-    #     BRANCH_NAME:
-    #       - BEAM-7092-spark3
-    #   fail-fast: false
     steps:
       - name: Checkout iemejia/docker-beam-spark3
         uses: actions/checkout@v2
       - name: Run docker image
         run:
           docker build -t iemejia/beam:BEAM-7092-spark3 .
-          # docker build --build-arg BEAM_VERSION=${{ matrix.BEAM_VERSION }} -t components-runtime-beam-snapshots-test .
