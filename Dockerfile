@@ -11,6 +11,7 @@ RUN cd beam && \
 
 FROM openjdk:11
 WORKDIR /root
+ENV BUILD_ID=idonthaveabuildidbutgradleishappynow
 COPY --from=beam-java8-build /root/beam beam
 RUN cd beam && \
     ./gradlew \
