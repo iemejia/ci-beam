@@ -12,8 +12,7 @@ RUN cd beam && \
 FROM openjdk:11
 WORKDIR /root
 COPY --from=beam-java8-build /root/beam beam
-RUN set -ex; && \
-    cd beam && \
+RUN cd beam && \
     ./gradlew \
         -x shadowJar \
         -x shadowTestJar \
