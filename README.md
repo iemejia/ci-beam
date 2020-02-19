@@ -7,5 +7,5 @@ regressions eagerly.
 Current build status:
 
 - Github Actions:
-![Docker Image CI](https://github.com/iemejia/docker-beam-spark3/workflows/Docker%20CI/badge.svg)
+![Docker CI](https://github.com/iemejia/docker-beam-spark3/workflows/Docker%20CI/badge.svg)
 
