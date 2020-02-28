@@ -1,0 +1,47 @@
+name: Spark Runner Nexmark
+on:
+  push:
+  schedule:
+    - cron: '0 0 * * *' # Once per day at midnight
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        runner: [SparkRunner, SparkStructuredStreamingRunner]
+        queryLanguage: [standard, sql]
+      fail-fast: false
+    steps:
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Checkout iemejia/beam-nexmark-ci
+        uses: actions/checkout@v2
+      - name: Checkout apache/beam
+        uses: actions/checkout@v2
+        with:
+          repository: apache/beam
+          ref: master
+          path: beam
+      - name: Run Nexmark
+        run: cd beam && ./gradlew :sdks:java:testing:nexmark:run
+          -Pnexmark.runner=":runners:spark"
+          -Pnexmark.args="
+          --runner=${{ matrix.runner }}
+          --streaming=false
+          --suite=SMOKE
+          --skipQueries=3
+          --queryLanguage=${{ matrix.queryLanguage }}
+          --manageResources=false
+          --monitorJobs=true
+          --enforceEncodability=true
+          --enforceImmutability=true"
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2.0.0
+        env:
+          SLACK_CHANNEL: apache-slack-notification-test
+          SLACK_MESSAGE: Success build
+          SLACK_TITLE: iemejia/beam-nexmark-ci
+          SLACK_USERNAME: iemejia/beam-nexmark-ci
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

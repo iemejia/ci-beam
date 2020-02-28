@@ -1,4 +1,4 @@
-name: Docker CI
+name: Spark 3 Runner Java 11
 on:
   push:
   schedule:
@@ -11,4 +11,4 @@ jobs:
         uses: actions/checkout@v2
       - name: Run docker image
         run:
-          docker build -t iemejia/beam:BEAM-7092-spark3 .
+          docker build -t iemejia/beam:BEAM-7092-spark3 -f spark3/Dockerfile spark3
