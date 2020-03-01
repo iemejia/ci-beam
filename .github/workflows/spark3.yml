@@ -10,5 +10,5 @@ jobs:
       - name: Checkout iemejia/docker-beam-spark3
         uses: actions/checkout@v2
       - name: Run docker image
-        run:
-          docker build -t iemejia/beam:BEAM-7092-spark3 -f spark3/Dockerfile spark3
+        working-directory: spark3
+        run: docker build -t iemejia/beam:BEAM-7092-spark3 .
