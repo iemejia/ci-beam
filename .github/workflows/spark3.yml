@@ -1,6 +1,6 @@
 name: Spark 3 Runner Java 11
 on:
-  push:
+  pull_request:
   schedule:
     - cron: '0 0 * * *' # Once per day at midnight
 jobs:

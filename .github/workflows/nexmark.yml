@@ -1,6 +1,6 @@
 name: Spark Runner Nexmark
 on:
-  push:
+  pull_request:
   schedule:
     - cron: '0 0 * * *' # Once per day at midnight
 jobs:
@@ -38,6 +38,7 @@ jobs:
           --enforceEncodability=true
           --enforceImmutability=true"
       - name: Slack Notification
+        if: failure()
         uses: rtCamp/action-slack-notify@v2.0.0
         env:
           SLACK_CHANNEL: apache-slack-notification-test
