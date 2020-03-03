@@ -25,7 +25,8 @@ jobs:
           ref: master
           path: beam
       - name: Run Nexmark
-        run: cd beam && ./gradlew :sdks:java:testing:nexmark:run
+        working-directory: beam
+        run: ./gradlew :sdks:java:testing:nexmark:run
           -Pnexmark.runner=":runners:spark"
           -Pnexmark.args="
           --runner=${{ matrix.runner }}

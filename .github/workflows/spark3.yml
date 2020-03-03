@@ -1,4 +1,4 @@
-name: Spark 3 Runner Java 11
+name: Spark 3 Runner Java 8
 on:
   pull_request:
   schedule:
@@ -7,8 +7,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout iemejia/docker-beam-spark3
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Checkout iemejia/beam-nexmark-ci
         uses: actions/checkout@v2
-      - name: Run docker image
-        run:
-          docker build -t iemejia/beam:BEAM-7092-spark3 -f spark3/Dockerfile spark3
+      - name: Checkout iemejia/beam:BEAM-7092-spark3
+        uses: actions/checkout@v2
+        with:
+          repository: iemejia/beam
+          ref: BEAM-7092-spark3
+          path: beam
+      - name: Run Spark 3 ValidatesRunner
+        working-directory: beam
+        run: ./gradlew :runners:spark:validatesRunnerBatch --scan ;
