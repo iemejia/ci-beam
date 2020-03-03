@@ -1,4 +1,4 @@
-name: Spark 3 Runner Java 11
+name: Spark 3 ValidatesRunner Java 11
 on:
   pull_request:
   schedule:
@@ -9,6 +9,6 @@ jobs:
     steps:
       - name: Checkout iemejia/docker-beam-spark3
         uses: actions/checkout@v2
-      - name: Run docker image
-        working-directory: spark3
-        run: docker build -t iemejia/beam:BEAM-7092-spark3 .
+      - name: Run Spark 3 ValidatesRunner Java 11 (docker)
+        working-directory: spark3-java11
+        run: docker build -t iemejia/beam:BEAM-7092-spark3-java11 .
