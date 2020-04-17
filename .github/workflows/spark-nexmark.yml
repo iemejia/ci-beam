@@ -43,6 +43,7 @@ jobs:
         uses: rtCamp/action-slack-notify@v2.0.0
         env:
           SLACK_CHANNEL: apache-slack-notification-test
+          SLACK_COLOR: '#FF3333'
           SLACK_MESSAGE: Spark Runner Nexmark
           SLACK_TITLE: iemejia/ci-beam
           SLACK_USERNAME: iemejia/ci-beam
