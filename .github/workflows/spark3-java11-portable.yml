@@ -1,0 +1,14 @@
+name: Spark 3 Portable ValidatesRunner Java 11
+on:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *' # Once per day at midnight
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout iemejia/docker-beam-spark3
+        uses: actions/checkout@v2
+      - name: Run Spark 3 ValidatesRunner Java 11 (docker)
+        working-directory: spark3-java11-portable
+        run: docker build -t iemejia/beam:BEAM-7092-spark3-java11-portable .
