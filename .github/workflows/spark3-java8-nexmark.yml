@@ -17,15 +17,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 8
-      - name: Setup Cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
       - name: Remove default github maven configuration
         # This step is a workaround to avoid a decryption issue of Beam's
         # net.linguica.gradle.maven.settings plugin and github's provided maven
@@ -39,6 +30,15 @@ jobs:
           repository: iemejia/beam
           ref: BEAM-7092-spark3
           path: iemejia/beam
+      - name: Setup Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
       - name: Run Spark 3 Nexmark Java 8
         working-directory: iemejia/beam
         run: ./gradlew :sdks:java:testing:nexmark:run
