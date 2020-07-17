@@ -1,6 +1,7 @@
 name: Spark Runner Nexmark
 on:
   pull_request:
+  push:
   schedule:
     - cron: '0 0 * * *' # Once per day at midnight
 jobs:
