@@ -13,7 +13,7 @@ jobs:
         queryLanguage: [standard, sql]
       fail-fast: false
     steps:
-      - name: Setup Java ${{ java-version }}
+      - name: Setup Java 8
         uses: actions/setup-java@v1
         with:
           java-version: 8
