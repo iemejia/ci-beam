@@ -29,6 +29,14 @@ jobs:
           repository: apache/beam
           ref: master
           path: apache/beam
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
       - name: Run Nexmark
         working-directory: apache/beam
         run: ./gradlew :sdks:java:testing:nexmark:run
