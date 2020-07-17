@@ -12,10 +12,10 @@ jobs:
         queryLanguage: [standard, sql]
       fail-fast: false
     steps:
-      - name: Set up JDK 1.8
+      - name: Setup Java {{java-version }}
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
+          java-version: 8
       - name: Remove default github maven configuration
         # This step is a workaround to avoid a decryption issue of Beam's
         # net.linguica.gradle.maven.settings plugin and github's provided maven
@@ -28,9 +28,9 @@ jobs:
         with:
           repository: apache/beam
           ref: master
-          path: beam
+          path: apache/beam
       - name: Run Nexmark
-        working-directory: beam
+        working-directory: apache/beam
         run: ./gradlew :sdks:java:testing:nexmark:run
           -Pnexmark.runner=":runners:spark"
           -Pnexmark.args="
