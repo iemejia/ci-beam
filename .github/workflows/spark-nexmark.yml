@@ -43,13 +43,13 @@ jobs:
           --monitorJobs=true
           --enforceEncodability=true
           --enforceImmutability=true"
-      - name: Slack Notification
-        if: failure()
-        uses: rtCamp/action-slack-notify@v2.0.2
-        env:
-          SLACK_CHANNEL: apache-slack-notification-test
-          SLACK_COLOR: '#FF3333'
-          SLACK_MESSAGE: Spark Runner Nexmark
-          SLACK_TITLE: iemejia/ci-beam
-          SLACK_USERNAME: iemejia/ci-beam
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      # - name: Slack Notification
+      #   if: failure()
+      #   uses: rtCamp/action-slack-notify@v2.0.2
+      #   env:
+      #     SLACK_CHANNEL: apache-slack-notification-test
+      #     SLACK_COLOR: '#FF3333'
+      #     SLACK_MESSAGE: Spark Runner Nexmark
+      #     SLACK_TITLE: iemejia/ci-beam
+      #     SLACK_USERNAME: iemejia/ci-beam
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
