@@ -1,6 +1,7 @@
 name: Spark 3 Nexmark Java 8
 on:
   pull_request:
+  push:
   schedule:
     - cron: '0 0 * * *' # Once per day at midnight
 jobs:
@@ -12,10 +13,19 @@ jobs:
         queryLanguage: [standard, sql]
       fail-fast: false
     steps:
-      - name: Set up JDK 1.8
+      - name: Set up Java
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
+          java-version: 8
+      - name: Setup Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
       - name: Remove default github maven configuration
         # This step is a workaround to avoid a decryption issue of Beam's
         # net.linguica.gradle.maven.settings plugin and github's provided maven
@@ -28,9 +38,9 @@ jobs:
         with:
           repository: iemejia/beam
           ref: BEAM-7092-spark3
-          path: beam
+          path: iemejia/beam
       - name: Run Spark 3 Nexmark Java 8
-        working-directory: beam
+        working-directory: iemejia/beam
         run: ./gradlew :sdks:java:testing:nexmark:run
           -Pnexmark.runner=":runners:spark"
           -Pnexmark.args="

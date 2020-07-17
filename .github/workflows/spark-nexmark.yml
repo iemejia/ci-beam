@@ -13,10 +13,19 @@ jobs:
         queryLanguage: [standard, sql]
       fail-fast: false
     steps:
-      - name: Setup Java 8
+      - name: Setup Java
         uses: actions/setup-java@v1
         with:
           java-version: 8
+      - name: Setup Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
       - name: Remove default github maven configuration
         # This step is a workaround to avoid a decryption issue of Beam's
         # net.linguica.gradle.maven.settings plugin and github's provided maven
@@ -30,14 +39,6 @@ jobs:
           repository: apache/beam
           ref: master
           path: apache/beam
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
       - name: Run Nexmark
         working-directory: apache/beam
         run: ./gradlew :sdks:java:testing:nexmark:run

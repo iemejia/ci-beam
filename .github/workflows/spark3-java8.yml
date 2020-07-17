@@ -1,16 +1,26 @@
 name: Spark 3 ValidatesRunner Java 8
 on:
   pull_request:
+  push:
   schedule:
     - cron: '0 0 * * *' # Once per day at midnight
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up JDK 1.8
+      - name: Setup Java
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
+          java-version: 8
+      - name: Setup Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
       - name: Remove default github maven configuration
         # This step is a workaround to avoid a decryption issue of Beam's
         # net.linguica.gradle.maven.settings plugin and github's provided maven
@@ -23,7 +33,7 @@ jobs:
         with:
           repository: iemejia/beam
           ref: BEAM-7092-spark3
-          path: beam
+          path: iemejia/beam
       - name: Run Spark 3 ValidatesRunner Java 8
-        working-directory: beam
+        working-directory: iemejia/beam
         run: ./gradlew :runners:spark:validatesRunnerBatch --scan ;
